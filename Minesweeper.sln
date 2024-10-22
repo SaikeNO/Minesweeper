@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35222.181
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Minesweeper.GameLogic", "Minesweeper\Minesweeper.GameLogic.csproj", "{18A1C691-D921-4287-A67F-C60D4ACE55EE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Minesweeper.GUI", "Minesweeper.GUI\Minesweeper.GUI.csproj", "{180D207E-AC80-4428-8520-EF55AAC41903}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Minesweeper.GUI", "Minesweeper.GUI\Minesweeper.GUI.csproj", "{180D207E-AC80-4428-8520-EF55AAC41903}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Minesweeper.TUI", "Minesweeper.TUI\Minesweeper.TUI.csproj", "{415FB41B-D37A-4112-958C-8B871F0DBBA4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Minesweeper.GameLogic", "Minesweeper.GameLogic\Minesweeper.GameLogic.csproj", "{9BB6F4F4-DF28-41F5-B043-E72BDA670488}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{18A1C691-D921-4287-A67F-C60D4ACE55EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{18A1C691-D921-4287-A67F-C60D4ACE55EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{18A1C691-D921-4287-A67F-C60D4ACE55EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{18A1C691-D921-4287-A67F-C60D4ACE55EE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{180D207E-AC80-4428-8520-EF55AAC41903}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{180D207E-AC80-4428-8520-EF55AAC41903}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{180D207E-AC80-4428-8520-EF55AAC41903}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -27,6 +23,10 @@ Global
 		{415FB41B-D37A-4112-958C-8B871F0DBBA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{415FB41B-D37A-4112-958C-8B871F0DBBA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{415FB41B-D37A-4112-958C-8B871F0DBBA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BB6F4F4-DF28-41F5-B043-E72BDA670488}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BB6F4F4-DF28-41F5-B043-E72BDA670488}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BB6F4F4-DF28-41F5-B043-E72BDA670488}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BB6F4F4-DF28-41F5-B043-E72BDA670488}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

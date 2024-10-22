@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Minesweeper\Minesweeper.GameLogic.csproj" />
+    <ProjectReference Include="..\Minesweeper.GameLogic\Minesweeper.GameLogic.csproj" />
   </ItemGroup>
 
 </Project>

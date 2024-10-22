@@ -1,143 +1,77 @@
 ﻿namespace Minesweeper.GameLogic;
 
-public class Game
+public class Game(int width, int height, int mines)
 {
-    private int[,] board; // 0 - puste, 1-8 - liczba sąsiadujących min, 9 - mina
-    private bool[,] revealed; // true, jeśli pole jest odkryte
-    private bool[,] flagged;   // true, jeśli pole jest oznaczone jako mina
-    private int width;
-    private int height;
-    private int mines;
+    private readonly Board Board = new(width, height, mines);
+    private bool IsGameOver = false;
 
-    public Game(int width, int height, int mines)
-    {
-        this.width = width;
-        this.height = height;
-        this.mines = mines;
-        InitializeBoard();
-    }
-
-    // Inicjalizacja planszy
-    private void InitializeBoard()
-    {
-        board = new int[width, height];
-        revealed = new bool[width, height];
-        flagged = new bool[width, height];
-
-        PlaceMines();
-        CalculateAdjacentMines();
-    }
-
-    // Losowe rozmieszczenie min
-    private void PlaceMines()
-    {
-        Random random = new Random();
-        int placedMines = 0;
-
-        while (placedMines < mines)
-        {
-            int x = random.Next(width);
-            int y = random.Next(height);
-
-            if (board[x, y] != 9) // 9 oznacza minę
-            {
-                board[x, y] = 9;
-                placedMines++;
-            }
-        }
-    }
-
-    // Obliczanie sąsiedztwa min
-    private void CalculateAdjacentMines()
-    {
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
-            {
-                if (board[x, y] == 9) continue;
-
-                int mineCount = 0;
-
-                for (int i = -1; i <= 1; i++)
-                {
-                    for (int j = -1; j <= 1; j++)
-                    {
-                        int nx = x + i;
-                        int ny = y + j;
-
-                        if (nx >= 0 && ny >= 0 && nx < width && ny < height && board[nx, ny] == 9)
-                        {
-                            mineCount++;
-                        }
-                    }
-                }
-
-                board[x, y] = mineCount;
-            }
-        }
-    }
-
-    // Odkrywanie pola
     public bool RevealTile(int x, int y)
     {
-        if (x < 0 || y < 0 || x >= width || y >= height || revealed[x, y])
+        if (IsGameOver) return false;
+
+        var tile = Board.GetTile(x, y);
+        if (tile is null || tile.IsRevealed || tile.IsFlagged) return false;
+
+        tile.Reveal();
+
+        if (tile.IsMine)
         {
-            return false;
+            IsGameOver = true;
+            return true; // Gra przegrana
         }
 
-        revealed[x, y] = true;
-
-        // Jeśli odkryto minę, gra jest przegrana
-        if (board[x, y] == 9)
+        if (tile.AdjacentMines == 0)
         {
-            return true;
+            RevealAdjacentTiles(x, y);
         }
 
-        // Automatyczne odkrywanie sąsiadujących pustych pól
-        if (board[x, y] == 0)
+        return false; // Gra kontynuowana
+    }
+
+    private void RevealAdjacentTiles(int x, int y)
+    {
+        for (int i = -1; i <= 1; i++)
         {
-            for (int i = -1; i <= 1; i++)
+            for (int j = -1; j <= 1; j++)
             {
-                for (int j = -1; j <= 1; j++)
+                int nx = x + i;
+                int ny = y + j;
+                var adjacentTile = Board.GetTile(nx, ny);
+                if (adjacentTile is not null && !adjacentTile.IsRevealed && !adjacentTile.IsMine)
                 {
-                    RevealTile(x + i, y + j);
+                    RevealTile(nx, ny);
                 }
             }
         }
-
-        return false;
     }
 
-    // Oznaczanie pola jako mina
     public void FlagTile(int x, int y)
     {
-        if (x >= 0 && y >= 0 && x < width && y < height && !revealed[x, y])
+        var tile = Board.GetTile(x, y);
+        if (tile is not null && !tile.IsRevealed)
         {
-            flagged[x, y] = !flagged[x, y];
+            tile.ToggleFlag();
         }
     }
 
-    // Sprawdzenie, czy gra jest wygrana
     public bool CheckWinCondition()
     {
-        for (int x = 0; x < width; x++)
+        for (int x = 0; x < Board.GetWidth(); x++)
         {
-            for (int y = 0; y < height; y++)
+            for (int y = 0; y < Board.GetHeight(); y++)
             {
-                if (board[x, y] != 9 && !revealed[x, y])
+                var tile = Board.GetTile(x, y);
+                if (tile is not null && !tile.IsMine && !tile.IsRevealed)
                 {
-                    return false; // Wciąż są nieodkryte pola
+                    return false;
                 }
             }
         }
-        return true; // Wszystkie pola bez min zostały odkryte
+        return true; // Wszystkie pola bez min odkryte
     }
 
-    // Funkcje pomocnicze do uzyskania informacji o planszy
-    public int GetTileValue(int x, int y) => board[x, y];
-    public bool IsRevealed(int x, int y) => revealed[x, y];
-    public bool IsFlagged(int x, int y) => flagged[x, y];
-    public bool IsMine(int x, int y) => board[x, y] == 9;
-    public int GetWidth() => width;
-    public int GetHeight() => height;
+    public bool IsGameOverStatus() => IsGameOver;
+    public int GetWidth() => Board.GetWidth();
+    public int GetHeight() => Board.GetHeight();
+    public Tile? GetTile(int x, int y) => Board.GetTile(x, y);
 }
