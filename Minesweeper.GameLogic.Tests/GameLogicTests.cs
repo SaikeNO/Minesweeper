@@ -1,6 +1,5 @@
 ﻿namespace Minesweeper.GameLogic.Tests;
 
-
 [TestFixture]
 public class GameLogicTests
 {
@@ -61,6 +60,22 @@ public class GameLogicTests
     }
 
     [Test]
+    public void Game_FlagTile_UnflagsTheTile()
+    {
+        // Arrange
+        var game = new Game(5, 5, 3);
+        game.FlagTile(2, 2); // Flag the tile
+
+        // Act
+        game.FlagTile(2, 2); // Unflag the tile
+        var tile = game.GetTile(2, 2);
+
+        // Assert
+        Assert.That(tile, Is.Not.Null, "Tile should not be null.");
+        Assert.That(tile.IsFlagged, Is.False, "Tile should not be flagged after calling FlagTile twice.");
+    }
+
+    [Test]
     public void Game_CheckWinCondition_ReturnsTrueWhenAllNonMinesRevealed()
     {
         // Arrange
@@ -86,6 +101,27 @@ public class GameLogicTests
         {
             Assert.That(game.CheckWinCondition(), Is.True, "Win condition should be met when all non-mine tiles are revealed.");
             Assert.That(game.IsGameOverStatus(), Is.False, "Game should not be over.");
+        });
+    }
+
+    [Test]
+    public void Game_FlagTile_DoesNotChangeRevealedTile()
+    {
+        // Arrange
+        var game = new Game(5, 5, 3);
+        var tileWithMine = game.GetTile(0, 0);
+        tileWithMine.IsMine = true;
+        game.RevealTile(0, 0); // Reveal mine tile
+
+        // Act
+        game.FlagTile(1, 1); // Try to flag a different tile
+
+        // Assert
+        var tile = game.GetTile(1, 1);
+        Assert.Multiple(() =>
+        {
+            Assert.That(tile.IsFlagged, Is.True, "Tile should be flagged.");
+            Assert.That(game.IsRevealed(0, 0), Is.True, "Revealed tile should remain revealed.");
         });
     }
 }

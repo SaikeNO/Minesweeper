@@ -48,10 +48,34 @@ public class Game(int width, int height, int mines)
     public void FlagTile(int x, int y)
     {
         var tile = Board.GetTile(x, y);
-        if (tile is not null && !tile.IsRevealed)
+        if (tile != null && !tile.IsRevealed)
         {
             tile.ToggleFlag();
         }
+    }
+
+    public bool IsFlagged(int x, int y)
+    {
+        var tile = Board.GetTile(x, y);
+        return tile != null && tile.IsFlagged;
+    }
+
+    public bool IsRevealed(int x, int y)
+    {
+        var tile = Board.GetTile(x, y);
+        return tile != null && tile.IsRevealed;
+    }
+
+    public bool IsMine(int x, int y)
+    {
+        var tile = Board.GetTile(x, y);
+        return tile != null && tile.IsMine;
+    }
+
+    public int GetTileValue(int x, int y)
+    {
+        var tile = Board.GetTile(x, y);
+        return tile?.AdjacentMines ?? 0;
     }
 
     public bool CheckWinCondition()
