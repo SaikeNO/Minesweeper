@@ -88,4 +88,5 @@ public class Board
 
     public int GetWidth() => Width;
     public int GetHeight() => Height;
+    public int GetMines() => Mines;
 }

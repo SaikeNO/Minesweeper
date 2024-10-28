@@ -1,22 +1,21 @@
 ﻿using Minesweeper.GameLogic;
 using Spectre.Console;
 using Spectre.Console.Rendering;
+using System.Diagnostics;
 
 namespace Minesweeper.TUI;
 
-public class ConsoleView
+public class ConsoleView(Game game)
 {
-    private Game Game;
+    private Game Game = game;
     private int CursorX = 0;
     private int CursorY = 0;
-
-    public ConsoleView(Game game)
-    {
-        Game = game;
-    }
+    private Stopwatch Timer = new();
 
     public void StartGame()
     {
+        Timer.Start();
+
         while (true)
         {
             RenderBoard();
@@ -47,10 +46,16 @@ public class ConsoleView
                 case ConsoleKey.F:
                     Game.FlagTile(CursorX, CursorY);
                     break;
+                case ConsoleKey.R:
+                    ResetGame();
+                    break;
+                case ConsoleKey.Q:
+                    return;
             }
 
             if (Game.CheckWinCondition())
             {
+                Timer.Stop();
                 RenderBoard();
                 AnsiConsole.Markup(ConsoleStyles.WinMessage);
                 return;
@@ -58,9 +63,20 @@ public class ConsoleView
         }
     }
 
+    private void ResetGame()
+    {
+        Timer.Restart();
+        Game = new Game(Game.GetWidth(), Game.GetHeight(), Game.GetMines());
+        CursorX = 0;
+        CursorY = 0;
+    }
+
     private void RenderBoard()
     {
         AnsiConsole.Clear();
+
+        AnsiConsole.Markup($"[bold green]Time:[/] {Timer.Elapsed:mm\\:ss}\n");
+
         var table = new Table();
         table.Border = TableBorder.None;
 

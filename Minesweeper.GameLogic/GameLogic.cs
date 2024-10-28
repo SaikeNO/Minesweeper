@@ -97,5 +97,6 @@ public class Game(int width, int height, int mines)
     public bool IsGameOverStatus() => IsGameOver;
     public int GetWidth() => Board.GetWidth();
     public int GetHeight() => Board.GetHeight();
+    public int GetMines() => Board.GetMines();
     public Tile? GetTile(int x, int y) => Board.GetTile(x, y);
 }
