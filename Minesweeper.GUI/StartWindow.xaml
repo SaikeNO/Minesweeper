@@ -1,0 +1,14 @@
+﻿<Window x:Class="Minesweeper.GUI.StartWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Wybierz Poziom Trudności" Height="300" Width="400">
+    <Grid>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" >
+            <TextBlock Text="Wybierz poziom trudności" FontSize="16" HorizontalAlignment="Center"/>
+
+            <Button Content="Łatwy" Width="200" Click="EasyButton_Click"/>
+            <Button Content="Średni" Width="200" Click="MediumButton_Click"/>
+            <Button Content="Trudny" Width="200" Click="HardButton_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
