@@ -72,10 +72,9 @@
 
 ### Warstwa wizualna – tryb graficzny
 
-- **Proponowana biblioteka**: Avalonia UI - nowoczesny, wieloplatformowy framework graficzny dla .NET, który pozwala tworzyæ aplikacje na systemy Windows, macOS oraz Linux.
+- **Proponowana biblioteka**: WPF - framework graficzny dla .NET, który pozwala tworzyæ aplikacje na systemy Windows
 
-- **Zalety Avalonia UI**:
-  - Wieloplatformowoœæ (obs³uguje Windows, macOS i Linux).
+- **Zalety WPF**:
   - Intuicyjny system XAML do definiowania interfejsów u¿ytkownika.
   - Obs³uga myszki i klawiatury.
   - Nowoczesne, lekkie animacje.
